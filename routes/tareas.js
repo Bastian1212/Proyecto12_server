@@ -12,10 +12,15 @@ router.post("/",
     auth, 
     [
         check("nombre", "El Nombre es obligatorio").not().isEmpty(), 
-        check("poryecto", "El Proyecto es obligatorio").not().isEmpty()
+        check("proyecto", "El Proyecto es obligatorio").not().isEmpty()
     ],
     tareaController.crearTarea
 ); 
 
+router.get("/", 
+    auth,
+    tareaController.obtenerTareas
+
+)
 
 module.exports = router;
