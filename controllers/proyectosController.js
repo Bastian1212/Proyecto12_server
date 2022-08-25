@@ -41,3 +41,28 @@ exports.obtenerProyectos = async(req, res ) => {
         
     }
 }
+
+
+exports.actualizarProyecto = async(req, res) => {
+    // revisar si hay errores 
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors : errors.array()})
+    }
+
+    // extrar la informacion del proyecto 
+
+    const {nombre}  = req.body;
+    const nuevoProyecto = {};
+    if(nombre){
+        nuevoProyecto.nombre = nombre;
+    }
+    try {
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("error en el servidor");
+        
+    }
+
+}
