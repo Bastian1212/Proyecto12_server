@@ -23,4 +23,11 @@ router.get("/",
 
 )
 
+router.put("/:id",
+    auth,
+    tareaController.actualizarTarea
+
+)
+
+
 module.exports = router;
