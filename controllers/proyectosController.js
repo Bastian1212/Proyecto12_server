@@ -7,7 +7,7 @@ exports.crearProyecto = async (req, res ) => {
     if(!errors.isEmpty()){
         return res.status(400).json({errors : errors.array()})
     }
-ß
+
     try{
         // crear un numevo proyecto 
         const proyecto = new Proyecto(req.body);
@@ -82,4 +82,30 @@ exports.actualizarProyecto = async(req, res) => {
         
     }
 
+}
+
+// Eliminar un proyecto por su id 
+
+exports.eliminarProyecto = async (req, res) => {
+    try {
+
+        // revisar el ID 
+        let proyecto = await Proyecto.findById(req.params.id);
+    
+        // su el Proyecto existe o no 
+        if(!proyecto){
+            return res.status(404).json({msg: "Proyecto no encontrado "})
+        }
+        // verificar el creador del proyecto 
+        if(proyecto.creador.toString() !== req.usuario.id){
+            return res.status(401).json({msg: "No Autorizado"});
+        }
+        //Eliminar el Proyecto 
+        await Proyecto.findByIdAndDelete({_id : req.params.id });
+        res.json({msg:"Proyecto Eliminado"});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("error en el servidor");
+        
+    }
 }
