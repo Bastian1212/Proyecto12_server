@@ -18,6 +18,7 @@ exports.autenticarUsuario = async (req, res )  => {
 
         let usuario = await Usuario.findOne({email});
         if(!usuario){
+            console.log("que paja ");
             return res.status(400).json({msg : "El usuario no existe"});
         }
 
@@ -59,13 +60,14 @@ exports.autenticarUsuario = async (req, res )  => {
 
 // obtiene que usuario este autenticado
 
-exports.usuarioAutenticado = async (req,res) => {
+
+exports.usuarioAutenticado = async (req, res) => {
     try {
-        const usuario = await Usuario.findById(req.usuario.id);
+        const usuario = await Usuario.findById(req.usuario.id).select('-password');
+        console.log(usuario);
         res.json({usuario});
     } catch (error) {
         console.log(error);
-        res.status(500).json({msg: "hubo un error"});
-        
+        res.status(500).json({msg: 'Hubo un error'});
     }
 }
